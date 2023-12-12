@@ -42,12 +42,6 @@ jobs:
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-    - name: Configure AWS Credentials for k8s activities
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: ${{ secrets.AWS_REGION }}
-        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
-
     - name: Update kube config
       run: |
         aws eks update-kubeconfig --name c7r-eks-dev-cluster --role-arn ${{ secrets.AWS_GITHUB_ACTIONS_CLUSTER_ROLE }}
