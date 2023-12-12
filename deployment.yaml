@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c7r
+  labels:
+    app: c7r
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: c7r
+  template:
+    metadata:
+      labels:
+        app: c7r
+    spec:
+      containers:
+        - name: c7r
+          image: 131485263174.dkr.ecr.ca-central-1.amazonaws.com/c7r:1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
