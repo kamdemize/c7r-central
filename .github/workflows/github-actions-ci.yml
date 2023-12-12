@@ -50,7 +50,7 @@ jobs:
 
     - name: Update kube config
       run: |
-        aws eks update-kubeconfig --name c7r-eks-dev-cluster
+        aws eks update-kubeconfig --name c7r-eks-dev-cluster --role-arn ${{ secrets.AWS_GITHUB_ACTIONS_CLUSTER_ROLE }}
         aws sts get-caller-identity
         kubectl get svc
     
