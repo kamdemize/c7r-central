@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: c7r
-          image: 131485263174.dkr.ecr.ca-central-1.amazonaws.com/c7r:1.1
+          image: 131485263174.dkr.ecr.ca-central-1.amazonaws.com/c7r:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
