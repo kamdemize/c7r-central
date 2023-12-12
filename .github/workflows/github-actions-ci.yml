@@ -27,6 +27,7 @@ jobs:
       with:
         aws-region: ca-central-1
         role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
+        role-session-name: github-actions-session
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -43,7 +44,7 @@ jobs:
 
     - name: Update kube config
       run: |
-        aws eks update-kubeconfig --name c7r-eks-dev-cluster --role-arn ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
+        aws eks update-kubeconfig --name c7r-eks-dev-cluster --role-arn ${{ secrets.AWS_GITHUB_ACTIONS_CLUSTER_ROLE }}
         aws sts get-caller-identity
         kubectl get svc
     
