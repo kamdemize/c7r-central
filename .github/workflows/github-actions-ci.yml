@@ -27,7 +27,6 @@ jobs:
       with:
         aws-region: ca-central-1
         role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
-        role-session-name: github-actions-session
 
     - name: Login to Amazon ECR
       id: login-ecr
