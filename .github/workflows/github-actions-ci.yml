@@ -46,11 +46,11 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-region: ${{ secrets.AWS_REGION }}
-        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_CLUSTER_ROLE }}
+        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
 
     - name: Update kube config
       run: |
-        aws eks update-kubeconfig --name c7r-eks-dev-cluster --role-arn ${{ secrets.AWS_GITHUB_ACTIONS_CLUSTER_ROLE }}
+        aws eks update-kubeconfig --name c7r-eks-dev-cluster
         aws sts get-caller-identity
         kubectl get svc
     
