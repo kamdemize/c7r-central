@@ -45,7 +45,7 @@ jobs:
     - name: Update kube config
       run: |
         aws eks update-kubeconfig --name c7r-eks-dev-cluster
-        kubectl get ns
+        aws sts get-caller-identity
     
     - name: Deploy to EKS
       run: |
