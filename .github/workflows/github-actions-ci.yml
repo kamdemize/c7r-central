@@ -7,7 +7,11 @@ on:
 
 jobs:
   deploy:
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -18,11 +22,12 @@ jobs:
         version: 'v1.24.0' # default is latest stable
       id: install
 
-    - name: Configure AWS Credentials
+    - name: Connecting GitHub Actions To AWS Using OIDC
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
         aws-region: ca-central-1
+        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OPENID_ROLE }}
+        role-session-name: github-actions-session
 
     - name: Login to Amazon ECR
       id: login-ecr
