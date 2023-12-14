@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: c7r-central
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: c7r-central
+  name: c7r-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: c7r
+  template:
+    metadata:
+      labels:
+        name: c7r
+    spec:
+      containers:
+        - name: c7r
+          image: 131485263174.dkr.ecr.ca-central-1.amazonaws.com/c7r:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: c7r-central
+  name: c7r-service
+spec:
+  selector:
+    name: c7r
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: c7r-central
+  name: c7r-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: c7r-service
+              port:
+                number: 80
